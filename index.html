@@ -14,7 +14,7 @@
 </head>
 <body>
 
-    <!-- Main title at the top -->
+    <!-- App Title -->
     <header>
         <div class="header-content">
             <div class="skull-left" aria-hidden="true">☠</div>
@@ -26,7 +26,7 @@
 
     <main>
 
-        <!-- Section to enter party size -->
+        <!-- Party Setup -->
         <section class="panel" id="panel-party" aria-labelledby="party-heading">
             <h2 id="party-heading">⚔ Party Setup</h2>
             <div class="form-group">
@@ -42,7 +42,7 @@
             </div>
         </section>
 
-        <!-- Section to add loot items -->
+        <!-- Add Loot -->
         <section class="panel" id="panel-add-loot" aria-labelledby="add-loot-heading">
             <h2 id="add-loot-heading">💰 Add Loot</h2>
             <div class="form-group">
@@ -68,7 +68,7 @@
             <button id="add-loot-btn" type="button">Add Loot</button>
         </section>
 
-        <!-- Shows current loot -->
+        <!-- Loot List -->
         <section class="panel" id="panel-loot-list" aria-labelledby="loot-list-heading">
             <h2 id="loot-list-heading">📜 Loot List</h2>
             <div id="loot-list-container" aria-live="polite" aria-label="Current loot items">
@@ -80,7 +80,7 @@
             </div>
         </section>
 
-        <!-- Button to split the loot -->
+        <!-- Split Loot -->
         <section class="panel" id="panel-split" aria-labelledby="split-heading">
             <h2 id="split-heading">⚖ Split Loot</h2>
             <button id="split-loot-btn" type="button">Split Loot</button>
@@ -97,11 +97,17 @@
             </div>
         </section>
 
-        <!-- Explanation of how the logic works -->
+        <!-- Logic Explanation -->
         <section class="panel reflection" id="panel-reflection" aria-labelledby="reflection-heading">
             <h2 id="reflection-heading">🧙 Logic Explanation</h2>
             <div class="reflection-content">
-                <!-- (unchanged content here) -->
+                <p><strong>Array:</strong> All loot items are stored in a single JavaScript array called <code>lootItems</code> declared at the top of script.js. Each element in the array is an object with two properties: <code>name</code> (a string) and <code>value</code> (a number). This array persists in memory across button clicks because it lives in the outer scope of the script.</p>
+                <p><strong>Loops:</strong> A traditional <code>for</code> loop iterates over <code>lootItems</code> inside <code>renderLoot()</code> to build the HTML list displayed on the page. A second loop inside <code>renderLoot()</code> (and used by <code>splitLoot()</code>) accumulates the total by adding each item's value to a running sum variable.</p>
+                <p><strong>Conditional Logic:</strong> Inside <code>addLoot()</code>, <code>if</code> statements validate that the loot name is not empty, the loot value is a valid number, and the value is not negative before pushing to the array. Inside <code>splitLoot()</code>, <code>if</code> statements check that party size is at least 1 and that the loot array is not empty before performing division. Errors are displayed inside the UI rather than using alerts.</p>
+                <p>
+                    <strong>Logic Flow Sketch:</strong><br>
+                    <img src="images/validation.png" alt="Logic flow sketch showing data flow from input validation through array storage to DOM rendering and split calculation" style="max-width:100%;margin-top:0.5rem;border-radius:6px;">
+                </p>
             </div>
         </section>
 
