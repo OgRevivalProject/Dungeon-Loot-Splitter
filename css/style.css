@@ -1,0 +1,482 @@
+/* All colors, fonts, and spacing live here so they're easy to change in one place */
+:root {
+    --color-bg: #0e0906;
+    --color-bg2: #1a0f0a;
+    --color-panel: #1e1208;
+    --color-panel-border: #5c3a1e;
+    --color-panel-highlight: #7a4d25;
+    --color-header-bg: #110a05;
+    --color-gold: #c9922a;
+    --color-gold-light: #f0c060;
+    --color-ember: #e05c20;
+    --color-text: #e8d8b8;
+    --color-text-muted: #9e856a;
+    --color-error: #e03030;
+    --color-error-bg: #2a0a0a;
+    --color-input-bg: #120d07;
+    --color-input-border: #4a3020;
+    --color-input-focus: #c9922a;
+    --color-btn-bg: #6b2f0e;
+    --color-btn-hover: #8a4015;
+    --color-btn-text: #f5d999;
+    --color-btn-disabled-bg: #2a1a0a;
+    --color-btn-disabled-text: #5a4530;
+    --color-result-bg: #160e06;
+    --color-result-border: #3d2510;
+    --font-display: 'Cinzel', 'Georgia', serif;
+    --font-body: 'Crimson Text', 'Georgia', serif;
+    --font-mono: 'Courier New', monospace;
+    --radius: 6px;
+    --shadow: 0 4px 20px rgba(0,0,0,0.7), inset 0 1px 0 rgba(200,150,50,0.08);
+    --panel-shadow: 0 2px 16px rgba(0,0,0,0.8), 0 0 0 1px rgba(92,58,30,0.4);
+}
+
+/* Wipe browser defaults so nothing looks inconsistent across browsers */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Three layered gradients give the background a worn, uneven parchment feel */
+body {
+    background-color: var(--color-bg);
+    background-image:
+        radial-gradient(ellipse at 20% 10%, rgba(90,40,10,0.3) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 80%, rgba(60,20,5,0.3) 0%, transparent 60%),
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(0,0,0,0.03) 2px,
+            rgba(0,0,0,0.03) 4px
+        );
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+header {
+    background: var(--color-header-bg);
+    border-bottom: 2px solid var(--color-panel-border);
+    padding: 1.5rem 1rem 1.25rem;
+    text-align: center;
+    box-shadow: 0 4px 30px rgba(200,80,10,0.15), var(--shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Thin gold line that fades in from both edges along the top of the header */
+header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, var(--color-gold) 30%, var(--color-gold-light) 50%, var(--color-gold) 70%, transparent 100%);
+    opacity: 0.7;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+/* Skulls glow on a slow loop — the delay keeps them from pulsing in sync */
+.skull-left,
+.skull-right {
+    font-size: 1.6rem;
+    opacity: 0.6;
+    color: var(--color-gold);
+    animation: skulls 4s ease-in-out infinite alternate;
+}
+
+.skull-right {
+    animation-delay: 2s;
+}
+
+@keyframes skulls {
+    from { opacity: 0.4; text-shadow: none; }
+    to   { opacity: 0.75; text-shadow: 0 0 12px rgba(201,146,42,0.6); }
+}
+
+h1 {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 5vw, 2.8rem);
+    font-weight: 700;
+    color: var(--color-gold-light);
+    letter-spacing: 0.06em;
+    text-shadow:
+        0 0 20px rgba(201,146,42,0.4),
+        2px 2px 0 rgba(0,0,0,0.8);
+    line-height: 1.1;
+}
+
+.header-subtitle {
+    font-family: var(--font-body);
+    font-style: italic;
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    margin-top: 0.4rem;
+    letter-spacing: 0.04em;
+}
+
+/* Single column on mobile, switches to a two-column grid at 768px */
+main {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.panel {
+    background: var(--color-panel);
+    border: 1px solid var(--color-panel-border);
+    border-radius: var(--radius);
+    padding: 1.4rem 1.5rem;
+    box-shadow: var(--panel-shadow);
+    position: relative;
+    background-image: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.03) 0%,
+        transparent 40px
+    );
+}
+
+/* Thin vertical gold bar on the left edge of every panel */
+.panel::before {
+    content: '';
+    position: absolute;
+    top: 1rem;
+    left: 0;
+    width: 3px;
+    bottom: 1rem;
+    background: linear-gradient(to bottom, transparent, var(--color-gold), transparent);
+    border-radius: 0 3px 3px 0;
+    opacity: 0.5;
+}
+
+h2 {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-gold);
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(92,58,30,0.5);
+    text-shadow: 0 0 10px rgba(201,146,42,0.2);
+}
+
+/* Keeps each label directly above its input at every screen size */
+.form-group {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+label {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+input[type="text"],
+input[type="number"] {
+    background: var(--color-input-bg);
+    border: 1px solid var(--color-input-border);
+    border-radius: var(--radius);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    padding: 0.55rem 0.8rem;
+    width: 100%;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    /* The up/down spinner arrows look out of place with this design */
+    -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="text"]::placeholder,
+input[type="number"]::placeholder {
+    color: rgba(158,133,106,0.4);
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+    outline: none;
+    border-color: var(--color-input-focus);
+    box-shadow: 0 0 0 2px rgba(201,146,42,0.15), 0 0 8px rgba(201,146,42,0.1);
+}
+
+button {
+    background: var(--color-btn-bg);
+    border: 1px solid var(--color-panel-highlight);
+    border-radius: var(--radius);
+    color: var(--color-btn-text);
+    cursor: pointer;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    padding: 0.65rem 1.4rem;
+    text-transform: uppercase;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+    width: 100%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,200,100,0.1);
+    margin-top: 0.4rem;
+}
+
+button:hover:not(:disabled) {
+    background: var(--color-btn-hover);
+    box-shadow: 0 4px 16px rgba(224,92,32,0.25), inset 0 1px 0 rgba(255,200,100,0.15);
+    transform: translateY(-1px);
+}
+
+button:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+
+button:focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
+}
+
+/* Makes it visually clear the button isn't ready yet without hiding it */
+button:disabled {
+    background: var(--color-btn-disabled-bg);
+    border-color: #3a2510;
+    color: var(--color-btn-disabled-text);
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+.error-msg {
+    color: var(--color-error);
+    font-size: 0.88rem;
+    font-family: var(--font-body);
+    font-style: italic;
+    min-height: 1.1em;
+    display: block;
+    padding: 0.2rem 0;
+}
+
+/* JS adds and removes this class to show/hide things — style properties are never touched directly */
+.hidden {
+    display: none !important;
+}
+
+/* 4-column grid: name gets more room, the other three split the rest evenly */
+.loot-table {
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr 1fr;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.loot-header {
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    letter-spacing: 0.04em;
+    border-bottom: 2px solid rgba(92,58,30,0.6);
+    padding-bottom: 0.25rem;
+    text-transform: uppercase;
+}
+
+/* display:contents makes this wrapper invisible to the grid so its children
+   slot directly into the parent grid columns instead of being wrapped in a box */
+#lootRows {
+    display: contents;
+}
+
+/* Same idea for each row — the div disappears so its four cells line up in the grid */
+.loot-row {
+    display: contents;
+}
+
+.loot-cell {
+    padding: 0.3rem 0;
+    font-family: var(--font-body);
+    font-size: 0.98rem;
+    color: var(--color-text);
+    border-bottom: 1px solid rgba(92,58,30,0.2);
+    animation: fadeIn 0.25s ease;
+}
+
+/* Gold on the value so it catches the eye immediately */
+.loot-cell.value-cell {
+    color: var(--color-gold);
+    font-weight: 600;
+}
+
+/* Remove button fills its column so it's easy to tap on mobile */
+.loot-cell button {
+    width: 100%;
+    font-size: 0.78rem;
+    padding: 0.3rem 0.5rem;
+    margin-top: 0;
+    letter-spacing: 0.03em;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateX(-6px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Shown when the loot array is empty, hidden once anything gets added */
+#noLootMessage {
+    color: var(--color-text-muted);
+    font-style: italic;
+    font-size: 0.95rem;
+    text-align: center;
+    padding: 0.75rem 0;
+}
+
+.total-display {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0.75rem;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--color-result-border);
+    border-radius: var(--radius);
+    margin-top: 0.5rem;
+}
+
+.total-label {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.04em;
+}
+
+.total-value {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: var(--color-gold-light);
+    font-weight: 700;
+    text-shadow: 0 0 8px rgba(240,192,96,0.3);
+}
+
+/* Flex column so the button, error message, and results stack with even spacing */
+#panel-split {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+#panel-split button {
+    margin-top: 0;
+}
+
+/* Stays hidden until the loot array has items and party size is valid */
+.results-area {
+    background: var(--color-result-bg);
+    border: 1px solid var(--color-result-border);
+    border-radius: var(--radius);
+    padding: 0.5rem 1rem;
+}
+
+.result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid rgba(60,37,16,0.5);
+}
+
+.result-row:last-child {
+    border-bottom: none;
+}
+
+.result-label {
+    font-family: var(--font-display);
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.03em;
+}
+
+.result-value {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-gold-light);
+    text-shadow: 0 0 10px rgba(240,192,96,0.25);
+}
+
+.reflection {
+    background: #1a1106;
+}
+
+.reflection h2 {
+    color: var(--color-text-muted);
+}
+
+.reflection-content p {
+    font-size: 0.98rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.9rem;
+    line-height: 1.7;
+}
+
+.reflection-content strong {
+    color: var(--color-text);
+}
+
+.reflection-content code {
+    font-family: var(--font-mono);
+    font-size: 0.88rem;
+    background: rgba(0,0,0,0.4);
+    color: var(--color-gold);
+    padding: 0.1em 0.35em;
+    border-radius: 3px;
+    border: 1px solid rgba(92,58,30,0.4);
+}
+
+.reflection-content img {
+    max-width: 100%;
+    margin-top: 0.5rem;
+    border-radius: 6px;
+}
+
+/* At 768px the layout switches from stacked to two columns side by side */
+@media (min-width: 768px) {
+    main {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.25rem;
+        padding: 1.5rem;
+    }
+
+    /* Stretch the reflection panel across both columns */
+    .reflection {
+        grid-column: span 2;
+    }
+
+    button {
+        font-size: 1rem;
+    }
+
+    /* Keep the Add Loot fields stacked vertically even on wide screens */
+    #panel-add-loot .form-group {
+        flex-direction: column;
+    }
+}
